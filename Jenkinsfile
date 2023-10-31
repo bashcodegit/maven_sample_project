@@ -10,6 +10,7 @@ pipeline {
         
         stage('Maven Build') {
             steps {
+                sh 'sudo apt install maven'
                 sh 'mvn clean package'
             }
         }
@@ -17,6 +18,12 @@ pipeline {
         stage('Unit Tests') {
             steps {
                 sh 'mvn test'
+            }
+        }
+        stage('SonarQube Analysis') {
+            def scannerHome = tool 'SonarScanner';
+            withSonarQubeEnv() {
+                sh "${scannerHome}/bin/sonar-scanner"
             }
         }
         
