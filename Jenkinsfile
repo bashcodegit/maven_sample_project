@@ -10,6 +10,7 @@ pipeline {
         
         stage('Maven Build') {
             steps {
+                sh 'apt install maven'
                 sh 'mvn clean package'
             }
         }
